@@ -45,6 +45,7 @@ def getBaseQueryFromOperator(operator, value=None, valuesList=None):
 def addLogicFromOperator(operator, query=None, queryList=None):
     if operator == "not":
         return Logic.QueryLogic.addNotLogicToQuery(query)
+    #Not and element match might be out of place here because and or and nor will follow similar syntaxes
     if operator == "em":
         return Logic.QueryLogic.addElementMatchLogicToQuery(queryList)
     if operator == "and":
