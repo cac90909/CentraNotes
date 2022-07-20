@@ -1,6 +1,7 @@
 import QueryBuilder
 import pymongo
 import CRUDHelpers.DeleteUtil
+import CRUDHelpers.UpdateUtil
 
 #Current database item structure: (_id: <id>, data: <data>, metadata: <metadata>)
 
@@ -56,15 +57,28 @@ def updateItemConditionally(collection, id, path, filter, value):
 #NOTE: might converge these into a single delete method that has a parameter so you specify you want to delete single item or multiple item
 def deleteSingleItem(collection, query, timeout):
 
-        deleteResult = CRUDHelpers.DeleteUtil.deleteSingleItem(collection, query, timeout)
-        deleteSuccess = deleteResult[0]
-        deletedItems = deleteResult[1]
+    deleteResult = CRUDHelpers.DeleteUtil.deleteSingleItem(collection, query, timeout)
+    deleteSuccess = deleteResult[0]
+    deletedItems = deleteResult[1]
 
 def deleteMultipleItems(collection, query, timeout):
 
-        deleteResult = CRUDHelpers.DeleteUtil.deleteMultipleItems(collection, query, timeout)
-        deleteSuccess = deleteResult[0]
-        deletedItems = deleteResult[1]
+    deleteResult = CRUDHelpers.DeleteUtil.deleteMultipleItems(collection, query, timeout)
+    deleteSuccess = deleteResult[0]
+    deletedItems = deleteResult[1]
+
+
+def updateSingleItem(collection, query, update, timeout):
+
+    updateResult = CRUDHelpers.UpdateUtil.updateSingleItem(collection, query, update, timeout)
+    updateSuccess = updateResult[0]
+    updateItems = updateResult[1]
+
+def updateMultipleItems(collection, query, update, timeout):
+
+    updateResult = CRUDHelpers.UpdateUtil.updateMultipleItems(collection, query, update, timeout)
+    updateSuccess = updateResult[0]
+    updateItems = updateResult[1]
 
 
 
