@@ -28,20 +28,11 @@ def selectSubItemConditionally(id, path, filter, filterValue):
     pass 
 
 #Deletions
-mongoUnsetOperator = "$unset"
-def deleteItem(collection, id):
-    deletionObject = {"_id" : id}
-    result = collection.delete_one(deletionObject)
-    print("API call recieved:", result.acknowledged)
-    print("Documents deleted:", result.deleted_count)
 
-def deleteSubItem(collection):
-    pass
 
-def deleteSubItemConditionally(collection):
-    pass
 
 #Updates
+mongoUnsetOperator = "$unset"
 mongoSetOperator = "$set"
 def updateItem(collection, id, path, value):
     filterObject = {"_id" : id}
@@ -69,7 +60,7 @@ def deleteSingleItem(collection, query, timeout):
         deleteSuccess = deleteResult[0]
         deletedItems = deleteResult[1]
 
-def deleteSingleItem(collection, query, timeout):
+def deleteMultipleItems(collection, query, timeout):
 
         deleteResult = CRUDHelpers.DeleteUtil.deleteMultipleItems(collection, query, timeout)
         deleteSuccess = deleteResult[0]
