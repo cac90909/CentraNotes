@@ -1,13 +1,8 @@
-import Query
+import QueryBuilder
 import pymongo
+import CRUDHelpers.DeleteUtil
 
-#Current idea for structuring of database items: (_id: <id>, data: <data>, metadata: <metadata>)
-
-#Options for keywords in conditionally targeting data
-#Each of these keywords is mapped to the equivalent PyMongo comparison operator
-#Ex: {"equals" : "$eq"}
-queryComparisonOptions = ["equals", "greaterThan", "greaterThanOrEquals", "insideOf", 
-                          "lessThan", "lessThanOrEquals", "notEquals", "notInsideOf"]
+#Current database item structure: (_id: <id>, data: <data>, metadata: <metadata>)
 
 #Insertions
 def insertItem(collection, id, dataItem, metadataItem):
@@ -62,6 +57,23 @@ def updateItemConditionally(collection, id, path, filter, value):
 
 
 
+
+
+
+
+#Timeout is in milliseconds
+#NOTE: might converge these into a single delete method that has a parameter so you specify you want to delete single item or multiple item
+def deleteSingleItem(collection, query, timeout):
+
+        deleteResult = CRUDHelpers.DeleteUtil.deleteSingleItem(collection, query, timeout)
+        deleteSuccess = deleteResult[0]
+        deletedItems = deleteResult[1]
+
+def deleteSingleItem(collection, query, timeout):
+
+        deleteResult = CRUDHelpers.DeleteUtil.deleteMultipleItems(collection, query, timeout)
+        deleteSuccess = deleteResult[0]
+        deletedItems = deleteResult[1]
 
 
 

@@ -1,6 +1,8 @@
 #Utilizes the Query.Helper python files to make it easier to construct Mongo DB Query Objects
 import QueryHelpers.QueryUtil
 
+#IDEA: make another layer on top of this where you can specify, as a parameter, the number of comparisons, fields, and if you want to include a prefaced logical operator?
+#That way, you could just call something like "BuildQuery" and not these hairy titles
 
 #comparisonOperator options include (strings): =, !=, >, >=, <, <=, e (exists), !e (does not exist), in (inside of), !in, all (match all)
 def buildOneComparisonOneFieldQuery(field, comparisonOperator, value=None, valuesList=None):
