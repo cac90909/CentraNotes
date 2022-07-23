@@ -30,29 +30,6 @@ def selectSubItemConditionally(id, path, filter, filterValue):
 
 #Deletions
 
-
-
-#Updates
-mongoUnsetOperator = "$unset"
-mongoSetOperator = "$set"
-def updateItem(collection, id, path, value):
-    filterObject = {"_id" : id}
-    updateObject = {mongoSetOperator : {path : value}}
-    collection.update_one(filterObject, updateObject)
-#TODO: come up with way to facilitate creation of filter objects
-def updateItemConditionally(collection, id, path, filter, value):
-    filterObject = {"_id" : id}
-    filterObject.update(filter) #This merges the two dict objects into one
-    updateObject= { mongoSetOperator : { path : value}}
-    collection.update(filterObject, updateObject, upsert=True, multi=True)
- 
-
-
-
-
-
-
-
 #Timeout is in milliseconds
 #NOTE: might converge these into a single delete method that has a parameter so you specify you want to delete single item or multiple item
 def deleteSingleItem(collection, query, timeout):
@@ -67,6 +44,11 @@ def deleteMultipleItems(collection, query, timeout):
     deleteSuccess = deleteResult[0]
     deletedItems = deleteResult[1]
 
+
+
+
+
+#Updates
 
 def updateSingleItem(collection, query, update, timeout):
 
