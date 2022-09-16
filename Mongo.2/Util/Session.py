@@ -2,7 +2,7 @@ import pymongo
 
 #Steps to starting a session:
     #1. Get the Mongo Client URI
-    #2. Start the Mongo Cluster by using the URI
+    #2. Create instance of pyMongo client (this is probably a wrapper that start the Mongo Cluster by using the URI)
     #3. Open the appropriate database (currently this db is 'userdata')
     #4. Choose the appropriate collection (ex: 'user1')
 
@@ -12,37 +12,36 @@ def getMongoClientURI():
         mongoURI = f.readlines()[0]
     return mongoURI
 
-def getMongoCluster(mongoURI):
-    clusterObject = pymongo.MongoClient(mongoURI)
-    return clusterObject
+def getMongoClient(mongoURI):
+    mongoClient = pymongo.MongoClient(mongoURI)
+    return mongoClient
 
-def getMongoDatabase(clusterObject, databaseName = "userdata"):
-    databaseObject = clusterObject[databaseName]
-    return databaseObject
+def getMongoDatabase(mongoClient, databaseName="userdata"):
+    database = mongoClient[databaseName]
+    return database
 
-def getMongoCollection(databaseObject, collectionName):
-    collectionObject = databaseObject[collectionName]
-    return collectionObject
+def getMongoCollection(database, collectionName="main"):
+    collection = database[collectionName]
+    return collection
 
 ####################################
 
 #Combines the above functions to start a Mongo Collection Session
-def startMongoCollectionSession(collectionName, databaseName = "userdata"):
+def startMongoCollectionSession(collectionName="allusers", databaseName="userdata"):
     mongoURI = getMongoClientURI()
-    clusterObject = getMongoCluster(mongoURI)
-    databaseObject = getMongoDatabase(clusterObject, databaseName)
-    collectionObject = getMongoCollection(databaseObject, collectionName)
-    return collectionObject
-
-#This function is a business layer wrapper for the startMongoCollectionSession function (I may move this to go in a different python file)
-#NOTE: userIDs correspond to the name of the mongo collection
-def startMongoUserSession(userID, databaseName = "userdata"):
-    userMongoSession = startMongoCollectionSession(databaseName = databaseName, collectionName = userID)
-    return userMongoSession
+    mongoClient = getMongoClient(mongoURI)
+    database = getMongoDatabase(mongoClient, databaseName)
+    collection = getMongoCollection(database, collectionName)
+    return collection
 
 #Only starts the mongo database (ex: "userdata"), not a specific collection inside of the database
-def startMongoDatabaseSession(databaseName = "userdata"):
+#NOTE: Im not sure if there will be a use case for just having the database session active, but making this function anyways
+def startMongoDatabaseSession(databaseName="userdata"):
     mongoURI = getMongoClientURI()
-    clusterObject = getMongoCluster(mongoURI)
-    databaseObject = getMongoDatabase(clusterObject, databaseName)
-    return databaseObject
+    mongoClient = getMongoClient(mongoURI)
+    database = getMongoDatabase(mongoClient, databaseName)
+    return database
+
+#This will end all server sessions created by this client, close all socketrs in the connection polls and stop the monitor threads, and cleanup client resources and disconnect from mongo DB
+def endMongoSession(mongoClient):
+    mongoClient.close()
