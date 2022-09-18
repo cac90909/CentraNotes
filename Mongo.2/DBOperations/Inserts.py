@@ -12,7 +12,3 @@ def InsertNextUser(collection):
         print("Inserted Next User into collection. Previous number of users: ", numUsers, ". New number of users: ", newNumUsers)
     except Exception as e:
         print("Error inserting new user. Exception: ", e)
-        
-def CreateNewField(userid, field): pass
-
-def CreateNewFieldWithValue(userid, field, value): pass
