@@ -4,6 +4,7 @@ import Util.Users
 #Also counts the number of document pre-creation and post-creation
 def InsertNextUser(collection):
     try:
+        print("DBOperations.Inserts.InsertNextUser")
         numUsers = Util.Users.getUserCount(collection)
         nextUserNumber = numUsers + 1
         nextUserID = "user" + str(nextUserNumber)
